@@ -21,7 +21,14 @@ router.get('/notes', celebrate(getAllNotesSchema), getAllNotes);
 router.post('/notes', celebrate(createNoteSchema), createNote);
 
 router.get('/notes/:noteId', celebrate(noteIdSchema), getNoteById);
-router.patch('/notes/:noteId', celebrate(updateNoteSchema), updateNote);
+router.patch(
+  '/notes/:noteId',
+  celebrate({
+    params: noteIdSchema.params,
+    body: updateNoteSchema.body,
+  }),
+  updateNote
+);
 router.delete('/notes/:noteId', celebrate(noteIdSchema), deleteNote);
 
 export default router;
