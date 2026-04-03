@@ -1,6 +1,4 @@
 import { Schema, model } from 'mongoose';
-import 'dotenv/config';
-
 import { TAGS } from '../constants/tags.js';
 
 const noteSchema = new Schema(
@@ -21,6 +19,11 @@ const noteSchema = new Schema(
       required: false,
       enum: TAGS,
       default: 'Todo',
+    },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
     },
   },
   {
