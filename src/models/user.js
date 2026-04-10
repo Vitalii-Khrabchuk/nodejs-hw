@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-const userScema = new Schema(
+const userSchema = new Schema(
   {
     username: {
       type: String,
@@ -17,6 +17,10 @@ const userScema = new Schema(
       required: true,
       min: 8,
     },
+    avatar: {
+      type: String,
+      default: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
+    },
   },
   {
     timestamps: true,
@@ -24,16 +28,16 @@ const userScema = new Schema(
   },
 );
 
-userScema.methods.toJSON = function () {
+userSchema.methods.toJSON = function () {
   const obj = this.toObject();
   delete obj.password;
   return obj;
 };
 
-userScema.pre('save', function () {
+userSchema.pre('save', function () {
   if (!this.username) {
     this.username = this.email;
   }
 });
 
-export const User = model('User', userScema);
+export const User = model('User', userSchema);
